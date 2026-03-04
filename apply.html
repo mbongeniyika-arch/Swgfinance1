@@ -1,0 +1,73 @@
+<!-- apply.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Loan Application | SWG FINANCE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo">SWG FINANCE</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="apply.html" class="btn-nav">Apply Now</a>
+  </nav>
+</header>
+
+<section class="form-section">
+  <h1>Loan Application Form</h1>
+  <form id="loanForm" action="/submit" method="POST" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Full Name" required />
+    <input type="email" name="email" placeholder="Email Address" required />
+    <input type="tel" name="phone" placeholder="Phone Number" required />
+    <input type="number" name="amount" placeholder="Loan Amount" required />
+    <input type="text" name="purpose" placeholder="Purpose of loan" required />
+    <!-- <textarea name="purpose" placeholder="Purpose of Loan" required></textarea> -->
+    <label>Upload Supporting Documents (PDF only):</label> <br>
+    <!-- Bank Statement -->
+<label for="bankStatement">Bank Statement:</label>
+<input type="file" id="bankStatement" name="bankStatement" accept=".pdf" />
+
+<!-- Identity Document -->
+<label for="identityDoc">Identity Document:</label>
+<input type="file" id="identityDoc" name="identityDoc" accept=".pdf" />
+
+<!-- Payslip -->
+<label for="payslip">Payslip:</label>
+<input type="file" id="payslip" name="payslip" accept=".pdf" />
+    <button type="submit" class="btn-primary">Submit Application</button>
+  </form>
+  <p id="message"></p>
+</section>
+
+<script>
+  // Optional: use AJAX to submit form without page reload
+  document.getElementById("loanForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    fetch('/submit', {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("message").textContent = data.message;
+    })
+    .catch(error => {
+      document.getElementById("message").textContent = "Error submitting form.";
+      console.error(error);
+    });
+  });
+</script>
+
+<footer>
+  <p>© 2026 SWG FINANCE. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
